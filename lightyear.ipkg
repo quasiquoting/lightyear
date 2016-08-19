@@ -1,11 +1,22 @@
 package lightyear
 
-opts = "-p effects"
+modules    = Lightyear
+           , Lightyear.Core
+           , Lightyear.Combinators
+           , Lightyear.Errmsg
+           , Lightyear.StringFile
+           , Lightyear.Strings
+           , Lightyear.Char
 
-modules = Lightyear
-	, Lightyear.Core
-        , Lightyear.Combinators
-        , Lightyear.Errmsg
-        , Lightyear.StringFile
-	, Lightyear.Strings
-	, Lightyear.Char
+brief      = "Parser combinators for Idris."
+version    = 0.1.0
+readme     = README.md
+license    = BSD-2
+author     = "Matúš Tejiščák"
+
+homepage   = https://github.com/quasiquoting/lightyear
+sourceloc  = https://github.com/quasiquoting/lightyear
+bugtracker = https://github.com/quasiquoting/lightyear/issues
+
+sourcedir  = src
+opts       = "-p effects"
