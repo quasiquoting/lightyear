@@ -11,7 +11,7 @@ import Data.Fin
 import Control.Monad.Trans
 import Control.Monad.State
 
-%access export
+%access  export
 %default total
 
 ||| Parse results
@@ -24,26 +24,25 @@ data Result str a =
 
 implementation Functor (Result str) where
   map f (Success s x ) = Success s (f x)
-  map f (Failure es) = Failure es
+  map f (Failure es)   = Failure es
 
 record ParserT str (m : Type -> Type) a where
   constructor PT
-  runParserT :
-    (r : Type) ->
-    (a -> str -> m r) -> -- uncommitted success
-    (a -> str -> m r) -> -- committed success
-    (List (str, String) -> m r) -> -- uncommitted error
-    (List (str, String) -> m r) -> -- committed error
-    str ->
-    m r
+  runParserT : (r : Type)
+            -> (a -> str -> m r)           -- uncommitted success
+            -> (a -> str -> m r)           -- committed success
+            -> (List (str, String) -> m r) -- uncommitted error
+            -> (List (str, String) -> m r) -- committed error
+            -> str
+            -> m r
 
 ||| Run a parser monad on some input
-execParserT : Monad m => ParserT str m a
-                      -> (input : str)
-                      -> m (Result str a)
-execParserT {str} {m} {a} (PT p) input = p (Result str a) success success failure failure input
-  where success x i = pure $ Success i x
-        failure = pure . Failure
+execParserT : Monad m => ParserT str m a -> (input : str) -> m (Result str a)
+execParserT {str} {m} {a} (PT p) input =
+  p (Result str a) success success failure failure input
+    where
+      success x i = pure $ Success i x
+      failure     = pure . Failure
 
 implementation Monad m => Functor (ParserT str m) where
   map {a} {b} f (PT p) = PT $ \r, us, cs => p r (us . f) (cs . f)
@@ -56,8 +55,8 @@ implementation Monad m => Applicative (ParserT str m) where
         (\f' => g r (cs . f') (cs . f') ce ce)
         ue ce
 
-
 infixl 2 <*>|
+
 ||| A variant of <$>, lazy in its second argument, which must NOT be
 ||| pattern-matched right away because we want to keep it lazy in case
 ||| it's not used.
@@ -83,7 +82,7 @@ implementation MonadState s m => MonadState s (ParserT str m) where
   put = lift . put
 
 ||| Fail with some error message
-fail : String -> ParserT str m a
+fail : (msg : String) -> ParserT str m a
 fail msg = PT $ \r, us, cs, ue, ce, i => ue [(i, msg)]
 
 implementation Monad m => Alternative (ParserT str m) where
@@ -106,8 +105,9 @@ infixl 3 <|>|
                                                  (ce . (err ++)) i) ce i
 
 infixl 0 <?>
+
 ||| Associate an error with parse failure
-(<?>) : Monad m => ParserT str m a -> String -> ParserT str m a
+(<?>) : Monad m => ParserT str m a -> (msg : String) -> ParserT str m a
 (PT f) <?> msg = PT $ \r, us, cs, ue, ce, i =>
   f r us cs (ue . ((i, msg) ::)) (ce . ((i, msg) ::)) i
 
@@ -131,9 +131,8 @@ interface Stream tok str | str where
 
 ||| Matches a single element that satisfies some condition, accepting
 ||| a transformation of successes.
-satisfyMaybe : (Monad m, Stream tok str)
-                        => (tok -> Maybe out)
-                        -> ParserT str m out
+satisfyMaybe : (Monad m, Stream tok str) => (f : tok -> Maybe out)
+                                         -> ParserT str m out
 satisfyMaybe {tok=tok} {str=str} f =
   PT $ \r, us, cs, ue, ce, i =>
     case uncons {tok=tok} {str=str} i of
@@ -143,20 +142,17 @@ satisfyMaybe {tok=tok} {str=str} f =
         Just res => us res i'
 
 ||| Matches a single element that satisfies some condition.
-satisfy : (Monad m, Stream tok str)
-                   => (tok -> Bool)
-                   -> ParserT str m tok
+satisfy : (Monad m, Stream tok str) => (p : tok -> Bool) -> ParserT str m tok
 satisfy p = satisfyMaybe (\t => if p t then Just t else Nothing)
 
 ||| Succeeds if and only if the argument parser fails.
 |||
 ||| In Parsec, this combinator is called `notFollowedBy`.
-requireFailure : ParserT str m tok -> ParserT str m ()
+requireFailure : (p : ParserT str m tok) -> ParserT str m ()
 requireFailure (PT f) = PT $ \r, us, cs, ue, ce, i =>
-                               f r
-                                 (\t, s => ue [(i, "argument parser to fail")])
-                                 (\t, s => ce [(i, "argument parser to fail")])
-                                 (\errs => us () i)
-                                 (\errs => cs () i)
-                                 i
+  f r (\t, s => ue [(i, "argument parser to fail")])
+      (\t, s => ce [(i, "argument parser to fail")])
+      (\errs => us () i)
+      (\errs => cs () i)
+      i
 -- --------------------------------------------------------------------- [ EOF ]
