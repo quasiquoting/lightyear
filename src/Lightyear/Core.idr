@@ -5,6 +5,8 @@
 -- This code is distributed under the BSD 2-clause license.
 -- See the file LICENSE in the root directory for its full text.
 -- --------------------------------------------------------------------- [ EOH ]
+
+||| Central Definitions and Instances.
 module Lightyear.Core
 
 import Data.Fin
@@ -26,6 +28,10 @@ implementation Functor (Result str) where
   map f (Success s x ) = Success s (f x)
   map f (Failure es)   = Failure es
 
+||| ParserT monad transformer.
+||| @ str A stream type.
+||| @ m   Underlying monad.
+||| @ a   Return type.
 record ParserT str (m : Type -> Type) a where
   constructor PT
   runParserT : (r : Type)
@@ -36,7 +42,9 @@ record ParserT str (m : Type -> Type) a where
             -> str
             -> m r
 
-||| Run a parser monad on some input
+||| Run a parser monad on some input and return a computation in the underlying
+||| monad `m` that returns either the remaining string `str` and the parser
+||| result `a` (`Success`) or a stack trace of errors (`Failure`).
 execParserT : Monad m => ParserT str m a -> (input : str) -> m (Result str a)
 execParserT {str} {m} {a} (PT p) input =
   p (Result str a) success success failure failure input
@@ -57,9 +65,8 @@ implementation Monad m => Applicative (ParserT str m) where
 
 infixl 2 <*>|
 
-||| A variant of <$>, lazy in its second argument, which must NOT be
-||| pattern-matched right away because we want to keep it lazy in case
-||| it's not used.
+||| A variant of `<$>`, lazy in its second argument, which must **NOT** be
+||| pattern-matched right away, in case it's not used.
 (<*>|) : Monad m => ParserT str m (a -> b)
                  -> Lazy (ParserT str m a)
                  -> ParserT str m b
@@ -81,7 +88,8 @@ implementation MonadState s m => MonadState s (ParserT str m) where
   get = lift get
   put = lift . put
 
-||| Fail with some error message
+||| Fail with some error message.
+||| @ msg An error message.
 fail : (msg : String) -> ParserT str m a
 fail msg = PT $ \r, us, cs, ue, ce, i => ue [(i, msg)]
 
@@ -94,9 +102,8 @@ implementation Monad m => Alternative (ParserT str m) where
 
 infixl 3 <|>|
 
-||| A variant of <|>, lazy in its second argument, which must NOT be
-||| pattern-matched right away because we want to keep it lazy in case
-||| it's not used.
+||| A variant of `<|>`, lazy in its second argument, which must **NOT** be
+||| pattern-matched right away, in case it's not used.
 (<|>|) : Monad m => ParserT str m a
                  -> Lazy (ParserT str m a)
                  -> ParserT str m a
@@ -106,12 +113,13 @@ infixl 3 <|>|
 
 infixl 0 <?>
 
-||| Associate an error with parse failure
+||| Associate an error with parse failure.
+||| @ msg An error message.
 (<?>) : Monad m => ParserT str m a -> (msg : String) -> ParserT str m a
 (PT f) <?> msg = PT $ \r, us, cs, ue, ce, i =>
   f r us cs (ue . ((i, msg) ::)) (ce . ((i, msg) ::)) i
 
-||| Commit to a parse alternative and prevent backtracking
+||| Commit to a parse alternative and prevent backtracking.
 commitTo : Monad m => ParserT str m a -> ParserT str m a
 commitTo (PT f) = PT $ \r, us, cs, ue, ce => f r cs cs ce ce
 
@@ -129,8 +137,9 @@ commitTo (PT f) = PT $ \r, us, cs, ue, ce => f r cs cs ce ce
 interface Stream tok str | str where
   uncons : str -> Maybe (tok, str)
 
-||| Matches a single element that satisfies some condition, accepting
-||| a transformation of successes.
+||| Succeed for a single element for which the transformation `f`
+||| returns `Just value` and return the transformed `value`.
+||| @ f A success transformation.
 satisfyMaybe : (Monad m, Stream tok str) => (f : tok -> Maybe out)
                                          -> ParserT str m out
 satisfyMaybe {tok=tok} {str=str} f =
@@ -141,11 +150,14 @@ satisfyMaybe {tok=tok} {str=str} f =
         Nothing  => ue [(i, "a different token")]
         Just res => us res i'
 
-||| Matches a single element that satisfies some condition.
+||| Succeed for a single element for which the predicate `p` returns `True` and
+||| return the element that is actually parsed.
+||| @ p A predicate.
 satisfy : (Monad m, Stream tok str) => (p : tok -> Bool) -> ParserT str m tok
 satisfy p = satisfyMaybe (\t => if p t then Just t else Nothing)
 
-||| Succeeds if and only if the argument parser fails.
+||| Succeed _if and only if_ the parser `p` fails. Do not consume any input.
+||| @ p A parser that must fail.
 |||
 ||| In Parsec, this combinator is called `notFollowedBy`.
 requireFailure : (p : ParserT str m tok) -> ParserT str m ()
