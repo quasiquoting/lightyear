@@ -16,13 +16,18 @@ import Control.Monad.State
 %access  export
 %default total
 
-||| Parse results
+||| Parse results.
+||| @ str A stream (string) to parse.
+||| @ a   A result type.
 public export
-data Result str a =
-  ||| Sucess, returning the remaining string and the parser result
-  Success str a |
-  ||| Failure, returning a stack trace of errors based on `<?>`
-  Failure (List (str, String)) -- a stacktrace of errors based on <?> and friends
+data Result : (str : Type) -> (a : Type) -> Type where
+  ||| Success
+  ||| @ rem    The remaining string.
+  ||| @ result The parser result.
+  Success : (rem : str) -> (result : a) -> Result str a
+  ||| Failure
+  ||| @ stacktrace A stack trace of errors based on `<?`> et al.
+  Failure : (stacktrace : List (str, String)) -> Result str a
 
 implementation Functor (Result str) where
   map f (Success s x ) = Success s (f x)

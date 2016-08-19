@@ -54,18 +54,23 @@ result <code>a</code> (<code>Success</code>) or a stack trace of errors (<code>F
 <span class="implicit boundvar" title="">str</span> =>
 <span class="implicit boundvar" title="">str</span> ->
 <a class="type" title="Prelude.Maybe.Maybe" href="Prelude.Maybe.html#Prelude.Maybe.Maybe">Maybe</a> <a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">(</a><span class="implicit boundvar" title="">tok</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">,</a>
-<span class="implicit boundvar" title="">str</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">)</a></span></dt><dd></dd></dl></dd><dt id="Lightyear.Core.Result"><span class="word">data&nbsp;</span><span class="name type" title="Lightyear.Core.Result">Result</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><span class="type" title="Type">Type</span> ->
-<span class="type" title="Type">Type</span> ->
-<span class="type" title="Type">Type</span></span></dt><dd><p>Parse results</p>
-<dl class="decls"><dt id="Lightyear.Core.Success"><span class="name constructor" title="Lightyear.Core.Success">Success</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><span class="implicit boundvar" title="">str</span> ->
-<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">str</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">)</a></span></dt><dd></dd></dl></dd><dt id="Lightyear.Core.Result"><span class="word">data&nbsp;</span><span class="name type" title="Lightyear.Core.Result">Result</span><span class="word">&nbsp;:&nbsp;</span><span class="signature">(<span class="documented boundvar" title="A stream (string) to parse.">str</span> : <span class="type" title="Type">Type</span>) ->
+(<span class="documented boundvar" title="A result type.">a</span> : <span class="type" title="Type">Type</span>) ->
+<span class="type" title="Type">Type</span></span></dt><dd><p>Parse results.</p>
+<dl><dt>str</dt><dd><p>A stream (string) to parse.</p>
+</dd><dt>a</dt><dd><p>A result type.</p>
+</dd></dl><dl class="decls"><dt id="Lightyear.Core.Success"><span class="name constructor" title="Lightyear.Core.Success">Success</span><span class="word">&nbsp;:&nbsp;</span><span class="signature">(<span class="documented boundvar" title="The remaining string.">rem</span> : <span class="implicit boundvar" title="">str</span>) ->
+(<span class="documented boundvar" title="The parser result.">result</span> : <span class="implicit boundvar" title="">a</span>) ->
 <a class="type" title="Lightyear.Core.Result" href="Lightyear.Core.html#Lightyear.Core.Result">Result</a> <span class="implicit boundvar" title="">str</span>
-<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Sucess, returning the remaining string and the parser result</p>
-</dd><dt id="Lightyear.Core.Failure"><span class="name constructor" title="Lightyear.Core.Failure">Failure</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">(</a><span class="implicit boundvar" title="">str</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">,</a>
-<span class="type" title="String">String</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">)</a> ->
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Success</p>
+<dl><dt>rem</dt><dd><p>The remaining string.</p>
+</dd><dt>result</dt><dd><p>The parser result.</p>
+</dd></dl></dd><dt id="Lightyear.Core.Failure"><span class="name constructor" title="Lightyear.Core.Failure">Failure</span><span class="word">&nbsp;:&nbsp;</span><span class="signature">(<span class="documented boundvar" title="A stack trace of errors based on &lt;code&gt;&amp;lt;?&lt;/code&gt;&amp;gt; et al.">stacktrace</span> : <a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">(</a><span class="implicit boundvar" title="">str</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">,</a>
+<span class="type" title="String">String</span><a class="type" title="Builtins.Pair" href="Builtins.html#Builtins.Pair">)</a>) ->
 <a class="type" title="Lightyear.Core.Result" href="Lightyear.Core.html#Lightyear.Core.Result">Result</a> <span class="implicit boundvar" title="">str</span>
-<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Failure, returning a stack trace of errors based on <code>&lt;?&gt;</code></p>
-</dd></dl></dd><dt id="Lightyear.Core.ParserT"><span class="word">record&nbsp;</span><span class="name type" title="Lightyear.Core.ParserT">ParserT</span><span class="type">&nbsp;str m a</span></dt><dd><p>ParserT monad transformer.</p>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Failure</p>
+<dl><dt>stacktrace</dt><dd><p>A stack trace of errors based on <code>&lt;?</code>&gt; et al.</p>
+</dd></dl></dd></dl></dd><dt id="Lightyear.Core.ParserT"><span class="word">record&nbsp;</span><span class="name type" title="Lightyear.Core.ParserT">ParserT</span><span class="type">&nbsp;str m a</span></dt><dd><p>ParserT monad transformer.</p>
 <dl><dt>str</dt><dd><p>A stream type.</p>
 </dd><dt>m</dt><dd><p>Underlying monad.</p>
 </dd><dt>a</dt><dd><p>Return type.</p>
