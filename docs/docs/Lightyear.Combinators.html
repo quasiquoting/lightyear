@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html><head><title>IdrisDoc: Lightyear.Combinators</title><link type="text/css" rel="stylesheet" href="../styles.css"></head><body class="namespace"><div class="wrapper"><header><strong>IdrisDoc</strong>: Lightyear.Combinators<nav><a href="../index.html">Index</a></nav></header><div class="container"><h1>Lightyear.Combinators</h1><dl class="decls"><dt id="Lightyear.Combinators.some"><span class="name function" title="Lightyear.Combinators.some">some</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Like <code>many</code>, but the parser must succeed at least once</p>
+</dd><dt id="Lightyear.Combinators.skip"><span class="name function" title="Lightyear.Combinators.skip">skip</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<a class="type" title="Unit" href="[builtins].html#Unit">()</a></span></dt><dd><p>Throw away the result from a parser</p>
+</dd><dt id="Lightyear.Combinators.sepByN"><span class="name function" title="Lightyear.Combinators.sepByN">sepByN</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="how many to parse">n</span> : <a class="type" title="Prelude.Nat.Nat" href="Prelude.Nat.html#Prelude.Nat.Nat">Nat</a>) ->
+(<span class="documented boundvar" title="the parser for items">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for separators">s</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Data.Vect.Vect" href="Data.Vect.html#Data.Vect.Vect">Vect</a> <span class="documented boundvar" title="how many to parse">n</span>
+<span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Parse precisely <code>n</code> <code>p</code>s, separated by <code>s</code>s, returning a vect of<br />
+successes.</p>
+<dl><dt>n</dt><dd><p>how many to parse</p>
+</dd><dt>p</dt><dd><p>the parser for items</p>
+</dd><dt>s</dt><dd><p>the parser for separators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.sepBy1"><span class="name function" title="Lightyear.Combinators.sepBy1">sepBy1</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser for items">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for separators">s</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Parse repeated instances of at least one <code>p</code>, separated by <code>s</code>,<br />
+returning a list of successes.</p>
+<dl><dt>p</dt><dd><p>the parser for items</p>
+</dd><dt>s</dt><dd><p>the parser for separators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.sepBy"><span class="name function" title="Lightyear.Combinators.sepBy">sepBy</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser for items">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for separators">s</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Parse zero or more <code>p</code>s, separated by <code>s</code>s, returning a list of<br />
+successes.</p>
+<dl><dt>p</dt><dd><p>the parser for items</p>
+</dd><dt>s</dt><dd><p>the parser for separators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.opt"><span class="name function" title="Lightyear.Combinators.opt">opt</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="boundvar" title="">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.Maybe.Maybe" href="Prelude.Maybe.html#Prelude.Maybe.Maybe">Maybe</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Attempt to parse <code>p</code>. If it succeeds, then return the value. If it<br />
+fails, continue parsing.</p>
+</dd><dt id="Lightyear.Combinators.ntimes"><span class="name function" title="Lightyear.Combinators.ntimes">ntimes</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="boundvar" title="">n</span> : <a class="type" title="Prelude.Nat.Nat" href="Prelude.Nat.html#Prelude.Nat.Nat">Nat</a>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Data.Vect.Vect" href="Data.Vect.html#Data.Vect.Vect">Vect</a> <span class="boundvar" title="">n</span>
+<span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Run the specified parser precisely <code>n</code> times, returning a vector<br />
+of successes.</p>
+</dd><dt id="Lightyear.Combinators.many"><span class="name function" title="Lightyear.Combinators.many">many</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Run some parser as many times as possible, collecting a list of<br />
+successes.</p>
+</dd><dt id="Lightyear.Combinators.eof"><span class="name function" title="Lightyear.Combinators.eof">eof</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.Stream" href="Lightyear.Core.html#Lightyear.Core.Stream">Stream</a> <span class="implicit boundvar" title="">tok</span>
+<span class="implicit boundvar" title="">str</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<a class="type" title="Unit" href="[builtins].html#Unit">()</a></span></dt><dd><p>Parse the end of input.</p>
+<p>This parser will succeed if and only if the input stream is empty.</p>
+</dd><dt id="Lightyear.Combinators.chainr1"><span class="name function" title="Lightyear.Combinators.chainr1">chainr1</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for operators">op</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span>)) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Parse one or more <code>p</code>s, separated by <code>op</code>s. Return a value that is<br />
+the right associative application of the functions returned by <code>op</code>.</p>
+<dl><dt>p</dt><dd><p>the parser</p>
+</dd><dt>op</dt><dd><p>the parser for operators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.chainr"><span class="name function" title="Lightyear.Combinators.chainr">chainr</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for operators">op</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span>)) ->
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Parse zero or more <code>p</code>s, separated by <code>op</code>s. Return a value that is<br />
+the right associative application of the functions returned by <code>op</code>.<br />
+Return <code>a</code> when there are zero occurences of <code>p</code>.</p>
+<dl><dt>p</dt><dd><p>the parser</p>
+</dd><dt>op</dt><dd><p>the parser for operators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.chainl1"><span class="name function" title="Lightyear.Combinators.chainl1">chainl1</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for operators">op</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span>)) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Parse one or more <code>p</code>s, separated by <code>op</code>s. Return a value that is<br />
+the left associative application of the functions returned by <code>op</code>.</p>
+<dl><dt>p</dt><dd><p>the parser</p>
+</dd><dt>op</dt><dd><p>the parser for operators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.chainl"><span class="name function" title="Lightyear.Combinators.chainl">chainl</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="the parser">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="the parser for operators">op</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">a</span>)) ->
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><p>Parse zero or more <code>p</code>s, separated by <code>op</code>s. Return a value that is<br />
+the left associative application of the functions returned by <code>op</code>.<br />
+Return <code>a</code> when there are zero occurences of <code>p</code>.</p>
+<dl><dt>p</dt><dd><p>the parser</p>
+</dd><dt>op</dt><dd><p>the parser for operators</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.between"><span class="name function" title="Lightyear.Combinators.between">between</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="documented boundvar" title="The opening parser.">open</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="The closing parser.">close</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="documented boundvar" title="The parser for the middle part.">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><p>Parse open, then p, then close. Returns the result of <code>p</code>.</p>
+<dl><dt>open</dt><dd><p>The opening parser.</p>
+</dd><dt>close</dt><dd><p>The closing parser.</p>
+</dd><dt>p</dt><dd><p>The parser for the middle part.</p>
+</dd></dl></dd><dt id="Lightyear.Combinators.anyToken"><span class="name function" title="Lightyear.Combinators.anyToken">anyToken</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.Stream" href="Lightyear.Core.html#Lightyear.Core.Stream">Stream</a> <span class="implicit boundvar" title="">tok</span>
+<span class="implicit boundvar" title="">str</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">tok</span></span></dt><dd><p>Parse a single arbitrary token. Returns the parsed token.</p>
+<p>This parser will fail if and only if the input stream is empty.</p>
+</dd><dt id="Lightyear.Combinators.alternating"><span class="name function" title="Lightyear.Combinators.alternating">alternating</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+(<span class="boundvar" title="">p</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+(<span class="boundvar" title="">s</span> : <a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<a class="type" title="Prelude.List.List" href="Prelude.List.html#Prelude.List.List">List</a> <span class="implicit boundvar" title="">a</span>)</span></dt><dd><p>Alternate between matches of <code>p</code> and <code>s</code>, starting with <code>p</code>,<br />
+returning a list of successes from both.</p>
+</dd><dt id="Lightyear.Combinators.&gt;!="><span class="name function" title="Lightyear.Combinators.&gt;!=">(&gt;!=)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+(<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><p>Committing bind</p>
+<dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixr 5">Left associative, precedence 5</dd></dl></dd><dt id="Lightyear.Combinators.&gt;!"><span class="name function" title="Lightyear.Combinators.&gt;!">(&gt;!)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><p>Committing sequencing</p>
+<dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixr 5">Left associative, precedence 5</dd></dl></dd><dt id="Lightyear.Combinators.&lt;*|"><span class="name function" title="Lightyear.Combinators.&lt;*|">(&lt;*|)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="function" title="Lazy" href="[builtins].html#Lazy">Lazy</a> (<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixl 2">Left associative, precedence 2</dd></dl></dd><dt id="Lightyear.Combinators.&lt;*!&gt;"><span class="name function" title="Lightyear.Combinators.&lt;*!&gt;">(&lt;*!&gt;)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+(<span class="implicit boundvar" title="">a</span> ->
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><p>Committing application</p>
+<dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixl 2">Left associative, precedence 2</dd></dl></dd><dt id="Lightyear.Combinators.&lt;*!"><span class="name function" title="Lightyear.Combinators.&lt;*!">(&lt;*!)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span></span></dt><dd><dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixl 2">Left associative, precedence 2</dd></dl></dd><dt id="Lightyear.Combinators.*&gt;|"><span class="name function" title="Lightyear.Combinators.*&gt;|">(*&gt;|)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="function" title="Lazy" href="[builtins].html#Lazy">Lazy</a> (<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span>) ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixl 2">Left associative, precedence 2</dd></dl></dd><dt id="Lightyear.Combinators.*!&gt;"><span class="name function" title="Lightyear.Combinators.*!&gt;">(*!&gt;)</span><span class="word">&nbsp;:&nbsp;</span><span class="signature"><a class="type" title="Prelude.Monad.Monad" href="Prelude.Monad.html#Prelude.Monad.Monad">Monad</a> <span class="implicit boundvar" title="">m</span> =>
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">a</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span> ->
+<a class="type" title="Lightyear.Core.ParserT" href="Lightyear.Core.html#Lightyear.Core.ParserT">ParserT</a> <span class="implicit boundvar" title="">str</span>
+<span class="implicit boundvar" title="">m</span>
+<span class="implicit boundvar" title="">b</span></span></dt><dd><dl><dt class="fixity">Fixity</dt><dd class="fixity" title="infixl 2">Left associative, precedence 2</dd></dl></dd></dl></div></div><footer>Produced by IdrisDoc version 1.0</footer></body></html>
